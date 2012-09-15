@@ -1,0 +1,96 @@
+jquery.transformlist - a CSS3 transform animation plugin for jQuery
+===================================================================
+
+Setup
+-----
+
+Save plugin somewhere and include in your page after you load jQuery:
+
+```html
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<script src="/js/jquery.transformlist.js"></script>
+```
+
+Then define a transformlist:
+
+```javascript
+$.TransformList('camera')
+    .addTransform('focalX',             'translateX', '0px')
+    .addTransform('focalY',             'translateY', '0px')
+    .addTransform('focalHeight',        'translateZ', '0px')
+    .addTransform('cameraRotation',     'rotateY',    '30deg')
+    .addTransform('cameraElevation',    'rotateX',    '25deg')
+    .addTransform('cameraDistance',     'translateZ', '250px');
+```
+
+Style an element with the transformlist:
+
+```javascript
+$('.camera').css('transformlist', {
+    transformlist: 'camera',
+    focalX:        '50px',
+    focalY:        '25px'
+    });
+```
+
+Animate an element to new values in the transformlist:
+
+```javascript
+$('.camera').animate({
+    transformlist: {
+        transformlist:   'camera',
+        focalX:          '20px',
+        focalY:          '+=30px',
+        cameraRotation:  '75deg',
+        cameraElevation: '-=10deg'
+        }
+    }, 1000, 'linear');
+```
+
+Interrupt the last animation with `stop` and animate from the interrupted position:
+
+```javascript
+$('.camera').stop(true).animate({
+    transformlist: {
+        transformlist:   'camera',
+        focalX:          '0px',
+        focalY:          '0px',
+        cameraRotation:  '0deg',
+        cameraElevation: '5deg',
+        cameraDistance:  '25px'
+        }
+    }, 300, 'linear');
+```
+
+Query the current tranformlist:
+
+```javascript
+// Super verbose for your reading pleasure.
+var transformlist = $('.camera').css('transformlist');
+var cameraRotationArgs = transformlist.transform('cameraRotation');
+var firstArgWithUnits = cameraRotationArgs[0];
+var cameraRotationWithoutUnits = parseFloat(firstArgWithUnits);
+
+// Or all-in-one for maximum unreadability.
+if (parseFloat($('.camera').css('transformlist').transform('cameraRotation')[0]) >= 720) {
+    console.log("Dizzy nao, plz stop, k?");
+}
+```
+
+Have fun.
+
+See Also
+--------
+
+ *  http://www.illusori.co.uk/projects/jquery.transformlist/
+
+Known Issues & Bugs
+-------------------
+
+ * Not a bug, but you can't animate between different kinds of transformlist.
+   I consider this a feature since it's not the target intent of the plugin. :)
+
+License
+-------
+
+GPL version 3, see LICENSE.txt for full license text.
