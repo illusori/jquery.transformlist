@@ -1,6 +1,38 @@
 jquery.transformlist - a CSS3 transform animation plugin for jQuery
 ===================================================================
 
+jquery.transformlist is a Javascript plugin for jQuery to
+add support for styling and correctly animating CSS3 transforms
+that make use of multiple transform functions.
+
+jquery.transformlist is not intended to provide animation between
+arbitrary transform styles - it doesn't provide the matrix
+decomposition required for that task. Instead it aims to assist
+you in creating a transform list of several transform functions
+that are composited for a specific task, and then provides you
+with means to use `jQuery.animate()` between different sets of
+arguments for those transform functions.
+
+That's a little unclear, so imagine you set up a "camera" transform
+list allowing you to adjust the X, Y, and Z of the focal point; and
+then the rotation around, elevation above or below, and distance from
+the focal point.
+
+jquery.transformlist then lets you animate between any different set
+of those values, using all the power and features of `jQuery.animate()`.
+
+To take it a step further, you could create a transform list to
+style and position a scene, a transform list for positioning of
+objects/elements within that scene, and finally a transform list
+for the camera view of the scene. You could then animate individual
+objects within the scene using the positioning transform list, while
+independently animating the camera view of the scene.
+
+For some examples, check below, or for a demonstration please visit
+the plugin website:
+
+ * http://www.illusori.co.uk/projects/jquery.transformlist/
+
 Setup
 -----
 
@@ -11,7 +43,8 @@ Save plugin somewhere and include in your page after you load jQuery:
 <script src="/js/jquery.transformlist.js"></script>
 ```
 
-Then define a transformlist:
+Then define a named "camera" transform list with 6 named transforms and
+default values:
 
 ```javascript
 $.TransformList('camera')
@@ -23,7 +56,7 @@ $.TransformList('camera')
     .addTransform('cameraDistance',     'translateZ', '250px');
 ```
 
-Style an element with the transformlist:
+Style an element with the transform list:
 
 ```javascript
 $('.camera').css('transformlist', {
@@ -33,7 +66,7 @@ $('.camera').css('transformlist', {
     });
 ```
 
-Animate an element to new values in the transformlist:
+Animate an element to new values in the transform list:
 
 ```javascript
 $('.camera').animate({
@@ -62,7 +95,7 @@ $('.camera').stop(true).animate({
     }, 300, 'linear');
 ```
 
-Query the current tranformlist:
+Query the current tranform list:
 
 ```javascript
 // Super verbose for your reading pleasure.
@@ -82,7 +115,7 @@ Have fun.
 See Also
 --------
 
- *  http://www.illusori.co.uk/projects/jquery.transformlist/
+ * http://www.illusori.co.uk/projects/jquery.transformlist/
 
 Known Issues & Bugs
 -------------------
